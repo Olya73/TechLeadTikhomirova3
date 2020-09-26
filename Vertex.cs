@@ -19,7 +19,7 @@ namespace CurrencyConverterConsoleApplication
         public void AddEdge(Vertex vertex)
         {
            // Vertex vertex = new Vertex(name);
-            if (!ConnectedVertexes.Contains(vertex))
+           // if (!ConnectedVertexes.Contains(vertex))
                 ConnectedVertexes.Add(vertex);
         }
 

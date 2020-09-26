@@ -7,43 +7,16 @@ using System.Threading.Tasks;
 
 namespace CurrencyConverterConsoleApplication.FileDir
 {
-    public class TextFile: FileManager
+    public class TextFile : InputOutFactory
     {
-        public override async Task<List<string>> ReadFileAsync(string fileName) // загрузка листа
+        public IRead Read()
         {
-            List<string> strings = new List<string>();
-            try
-            {
-                string line;                
-                using (StreamReader sr = new StreamReader(fileName))
-                {
-                    while ((line = await sr.ReadLineAsync()) != null)
-                    {
-                        strings.Add(line);
-                    }
-                }
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return strings;
+            return new ReadFromTextFile();
         }
 
-
-        public override async Task WriteFileAsync(string textToWrite, string fileName)
+        public IWrite Write()
         {
-            using (FileStream fstream = new FileStream(fileName, FileMode.Truncate))
-            {
-                using (StreamWriter sw = new StreamWriter(fileName, false, System.Text.Encoding.Default))
-                {
-                    await sw.WriteLineAsync(textToWrite);
-                }
-            }
+            return new WriteToTextFile();
         }
     }
 }

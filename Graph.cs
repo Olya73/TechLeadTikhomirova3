@@ -14,9 +14,15 @@ namespace CurrencyConverterConsoleApplication
         {
             AllVertexes = new List<Vertex>();
         }
-        public void AddVertex(string name)
+        public Vertex AddVertex(string name)
         {
-            if (GetVertex(name) == null) AllVertexes.Add(new Vertex(name));
+            Vertex vertex = GetVertex(name);
+            if (vertex == null)
+            {
+                vertex = new Vertex(name);
+                AllVertexes.Add(vertex);
+            }
+            return vertex;
         }
         public Vertex GetVertex(string name)
         {
@@ -28,8 +34,8 @@ namespace CurrencyConverterConsoleApplication
         }
         public void AddEdge(string sourceName, string destName)
         {
-            Vertex sourceVertex = GetVertex(sourceName);
-            Vertex destVertex = GetVertex(destName);
+            Vertex sourceVertex = GetVertex(sourceName) ?? AddVertex(sourceName);
+            Vertex destVertex = GetVertex(destName) ?? AddVertex(destName);
             if (sourceVertex != null && destVertex != null)
             {
                 sourceVertex.AddEdge(destVertex);
