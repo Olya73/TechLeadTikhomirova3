@@ -1,4 +1,5 @@
 ﻿using CurrencyConverterConsoleApplication.FileDir;
+using CurrencyConverterConsoleApplication.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,37 +19,48 @@ namespace CurrencyConverterConsoleApplication
         public async Task FindPathAsync(string source, string dest)
         {
             var filesCav = await _factory.Read().ReadFileAsync(source);
-            var pathToFind = Parse(new Regex(@"[A-Z]{3}"), filesCav[0]);
-            if (pathToFind.Count > 2 || pathToFind == null) return;
-            int count;
-            Graph graph = new Graph();
+            var path = CurrencUtils.GetCurrenc(filesCav[0], ParseCurrency);
+            if (path == null)
+                return;
 
-            if (!Int32.TryParse(filesCav[1], out count)) return;
-            for (var i =0; i< count; i++)
+            var countPairs = CurrencUtils.GetCurrenc(filesCav[1], ParseInt);
+            if (countPairs == 0)
+                return;
+
+            Graph graph = new Graph();
+            for (var i =0; i< countPairs; i++)
             {
-                graph.AddEdge(Parse(new Regex(@"[A-Z]{3}"), filesCav[i+2])[0], Parse(new Regex(@"[A-Z]{3}"), filesCav[i + 2])[1]);
+                var pair = CurrencUtils.GetCurrenc(filesCav[i], ParseCurrency);
+                if (pair != null) graph.AddEdge(pair[0], pair[1])
+                // graph.AddEdge(Parse(new Regex(@"[A-Z]{3}"), filesCav[i+2])[0], Parse(new Regex(@"[A-Z]{3}"), filesCav[i + 2])[1]);
             }
-            var del = graph.BFS(pathToFind[0], pathToFind[1]);
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (var k in del())
-            {
-                stringBuilder.Insert(0, k);
-            }
-            await _factory.Write().WriteFileAsync(stringBuilder.ToString(), dest);
+           // var del = graph.BFS(pathToFind[0], pathToFind[1]);
+           /// StringBuilder stringBuilder = new StringBuilder();
+           // foreach (var k in del())
+           // {
+           //     stringBuilder.Insert(0, k);
+          //  }
+           // await _factory.Write().WriteFileAsync(stringBuilder.ToString(), dest);
             
         }
-        public static List<string> Parse(Regex regex, string sb)
+        public Result<List<string>> ParseCurrency(string input)
         {
-            List<string> res = new List<string>();
-            MatchCollection matches = regex.Matches(sb);
-            if (matches.Count > 0)
-            {
-                foreach (Match match in matches)
-                    res.Add(match.Value);
-            }
+            var strings = CurrencUtils.Parse(new Regex(@"[A-Z]{3}"), input);
+            if (strings.Count == 2)
+                return new Result<List<string>>.Ok(strings);
             else
-                return null;
-            return res;
+                return new Result<List<string>>.Error("Не правильно введены валюты для поиска");
         }
+        public Result<int> ParseInt(string input)
+        {
+            int value;
+            if (Int32.TryParse(input, out value))
+                if (value > 0)
+                    return new Result<int>.Ok(value);
+                else return new Result<int>.Error("Не является положительным числом");
+            else 
+                return new Result<int>.Error("Не число");
+        }
+        
     }
 }
