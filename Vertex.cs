@@ -23,6 +23,12 @@ namespace CurrencyConverterConsoleApplication
                 ConnectedVertexes.Add(vertex);
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Vertex vertex &&
+                   Name == vertex.Name;
+        }
+
         public override string ToString() => Name;
 
     }

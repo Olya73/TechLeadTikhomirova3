@@ -52,7 +52,6 @@
     <Compile Include="FileDir\WriteToTextFile.cs" />
     <Compile Include="GetPath.cs" />
     <Compile Include="Graph.cs" />
-    <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CurrencUtils.cs" />

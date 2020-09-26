@@ -46,43 +46,37 @@ namespace CurrencyConverterConsoleApplication
         {
             var src = GetVertex(sourceName);
             var dest = GetVertex(destName);
-            if (GetVertex(sourceName) == null || GetVertex(destName) == null) return null ;
-            if (GetVertex(sourceName)==GetVertex(destName)) return null;
-           // var visited = new HashSet<Vertex>();
+            List<Vertex> verticesFinalList = new List<Vertex>();
+
+            if (src == null || dest == null) return null ;
+            if (src.Equals(dest)) return () => verticesFinalList;
+
             var neighbours = new Dictionary<Vertex, Vertex>();
-            //visited.Add(src);
             var queue = new Queue<Vertex>();
-            var count = 0;
+
             queue.Enqueue(src);
             while (queue.Count > 0)
             {
                 var curr = queue.Dequeue();
-                //if (neighbours.ContainsKey(curr)) continue;
-                //neighbours.Add(curr);
-                count++;
                 foreach (var v in curr.ConnectedVertexes)
                 {
                     if (neighbours.ContainsKey(v)) continue;
                     neighbours[v] = curr;
                     if (v == dest) return () =>
                     {
-                        List<Vertex> vertices = new List<Vertex>();
                         var c = dest;
                         do
                         {
-                            vertices.Add(c);
+                            verticesFinalList.Add(c);
                             c = neighbours[c];
                         } while (!c.Equals(src));
-                        vertices.Add(c);
-                        return vertices;
+                        verticesFinalList.Add(c);
+                        return verticesFinalList;
                     };
                     queue.Enqueue(v);
                 }
             }
-
-            
-
-            return null;
+            return () => verticesFinalList;
         }
     }
 }

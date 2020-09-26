@@ -24,15 +24,14 @@ namespace CurrencyConverterConsoleApplication.Utils
         }
         public static List<string> Parse(Regex regex, string sb)
         {
-            List<string> res = new List<string>();
+            List<string> res = null;
             MatchCollection matches = regex.Matches(sb);
-            if (matches.Count > 0)
+            if (matches.Count != 0)
             {
+                res = new List<string>();
                 foreach (Match match in matches)
                     res.Add(match.Value);
             }
-            else
-                return null;
             return res;
         }
     }
