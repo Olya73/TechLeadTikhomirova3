@@ -43,14 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileDir\IFileFactory.cs" />
     <Compile Include="FileDir\InputOutFactory.cs" />
     <Compile Include="FileDir\IRead.cs" />
     <Compile Include="FileDir\IWrite.cs" />
     <Compile Include="FileDir\ReadFromTextFile.cs" />
     <Compile Include="FileDir\TextFile.cs" />
     <Compile Include="FileDir\WriteToTextFile.cs" />
-    <Compile Include="GetPath.cs" />
+    <Compile Include="Converter.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

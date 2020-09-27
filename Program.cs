@@ -11,9 +11,7 @@ namespace CurrencyConverterConsoleApplication
     {
         static async Task Main(string[] args)
         {
-            
-
-            GetPath getPath = new GetPath(new TextFile());
+            Converter getPath = new Converter(new TextFile());
             await getPath.FindPathAsync("input.txt", "output.txt");
             Console.ReadKey();
         }

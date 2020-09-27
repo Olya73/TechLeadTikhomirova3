@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace CurrencyConverterConsoleApplication
 {
-    public class GetPath
+    public class Converter
     {
         InputOutFactory _factory;
         Graph graph;
-        public GetPath(InputOutFactory factory)
+        public Converter(InputOutFactory factory)
         {
             _factory = factory;
             graph = new Graph();

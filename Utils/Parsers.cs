@@ -11,7 +11,7 @@ namespace CurrencyConverterConsoleApplication.Utils
     {
         public static Result<List<string>> ParseCurrency(string input)
         {
-            var strings = Parse(new Regex(@"([A-Z]{3}\z+)|([A-Z]{3}\s+)"), input);
+            var strings = Parse(new Regex(@"[A-Z]{3}\b"), input);
             if (strings != null && strings.Count == 2)
                 return new Result<List<string>>.Ok(strings);
             else
