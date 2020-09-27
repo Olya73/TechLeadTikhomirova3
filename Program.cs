@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CurrencyConverterConsoleApplication
@@ -16,7 +15,6 @@ namespace CurrencyConverterConsoleApplication
 
             GetPath getPath = new GetPath(new TextFile());
             await getPath.FindPathAsync("input.txt", "output.txt");
-            
             Console.ReadKey();
         }
     }

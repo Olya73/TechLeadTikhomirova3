@@ -36,10 +36,7 @@ namespace CurrencyConverterConsoleApplication
         {
             Vertex sourceVertex = GetVertex(sourceName) ?? AddVertex(sourceName);
             Vertex destVertex = GetVertex(destName) ?? AddVertex(destName);
-            if (sourceVertex != null && destVertex != null)
-            {
-                sourceVertex.AddEdge(destVertex);
-            }
+            sourceVertex.AddEdge(destVertex);
         }
 
         public Func<List<Vertex>> BFS(string sourceName, string destName)
@@ -48,7 +45,7 @@ namespace CurrencyConverterConsoleApplication
             var dest = GetVertex(destName);
             List<Vertex> verticesFinalList = new List<Vertex>();
 
-            if (src == null || dest == null) return null ;
+            if (src == null || dest == null) return () => verticesFinalList;
             if (src.Equals(dest)) return () => verticesFinalList;
 
             var neighbours = new Dictionary<Vertex, Vertex>();

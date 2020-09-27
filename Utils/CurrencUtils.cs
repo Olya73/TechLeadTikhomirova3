@@ -22,17 +22,6 @@ namespace CurrencyConverterConsoleApplication.Utils
                 default: return default;
             }
         }
-        public static List<string> Parse(Regex regex, string sb)
-        {
-            List<string> res = null;
-            MatchCollection matches = regex.Matches(sb);
-            if (matches.Count != 0)
-            {
-                res = new List<string>();
-                foreach (Match match in matches)
-                    res.Add(match.Value);
-            }
-            return res;
-        }
+        
     }
 }

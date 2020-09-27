@@ -11,7 +11,7 @@ namespace CurrencyConverterConsoleApplication.Utils
     {
         public static Result<List<string>> ParseCurrency(string input)
         {
-            var strings = CurrencUtils.Parse(new Regex(@"[A-Z]{3}"), input);
+            var strings = Parse(new Regex(@"([A-Z]{3}\z+)|([A-Z]{3}\s+)"), input);
             if (strings != null && strings.Count == 2)
                 return new Result<List<string>>.Ok(strings);
             else
@@ -23,9 +23,21 @@ namespace CurrencyConverterConsoleApplication.Utils
             if (Int32.TryParse(input, out value))
                 if (value > 0)
                     return new Result<int>.Ok(value);
-                else return new Result<int>.Error("Не является положительным числом");
+                else return new Result<int>.Error($"{input} Не является положительным числом");
             else
-                return new Result<int>.Error("Не число");
+                return new Result<int>.Error($"{input} Не число");
+        }
+        public static List<string> Parse(Regex regex, string sb)
+        {
+            List<string> res = null;
+            MatchCollection matches = regex.Matches(sb);
+            if (matches.Count != 0)
+            {
+                res = new List<string>();
+                foreach (Match match in matches)
+                    res.Add(match.Value);
+            }
+            return res;
         }
     }
 }

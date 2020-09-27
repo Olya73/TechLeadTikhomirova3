@@ -13,7 +13,7 @@ namespace CurrencyConverterConsoleApplication.FileDir
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(fileName, false, System.Text.Encoding.Default))
+                using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.Default))
                 {
                     await sw.WriteLineAsync(textToWrite);
                 }
